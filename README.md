@@ -25,7 +25,7 @@
 
 ### Steps
 
-1. *Clone the Repository*
+1. **Clone the Repository**
 
    Open your terminal (Git Bash, Command Prompt, or PowerShell) and navigate to the directory where you want to clone the project. Then, run:
    bash
@@ -36,52 +36,54 @@
 
 It's good practice to use a virtual environment to manage dependencies. You can create one using venv:
 
-bash
-
+```bash
 python -m venv venv
+```
 
-Activate the virtual environment:
+*Activate the virtual environment:*
 
 On Windows:
-bash
-
+```bash
 venv\Scripts\activate
+```
 
-On macOS/Linux:
-bash
+*On macOS/Linux:*
+```bash
 source venv/bin/activate
+```
 
 3. **Install the Requirements**
 
 Install the necessary dependencies by running:
 
-bash
+```bash
 pip install -r requirements.txt
-
+```
 
 4.**Run the Conversion Script**
 
-To normalize the databases and convert them to JSON, run:
+*To normalize the databases and convert them to JSON, run:*
 
-bash
+```bash
 python convert_json.py
+```
 
 5.**Run the Server**
 
-If your project includes a server component (e.g., a Flask or FastAPI server), start the server by running:
+*If your project includes a server component (e.g., a Flask or FastAPI server), start the server by running:*
 
-bash
+```bash
  python convert_json.py
 ```
 
 
 6.*Access the Web Interface*
 
-Open your web browser and navigate to the URL provided by the server (usually http://127.0.0.1:5000 or similar) to access the HTML CRUD interface.
+*Open your web browser and navigate to the URL provided by the server (usually http://127.0.0.1:5000 or similar) to access the HTML CRUD interface.*
 
 
 
-##USER INTERFACE##
+### USER INTERFACE
 
 
 ![USER INTERFACE](https://github.com/adnell33/GaruData/raw/main/sample.jpg)
