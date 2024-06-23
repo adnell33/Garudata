@@ -29,7 +29,7 @@
 
    Open your terminal (Git Bash, Command Prompt, or PowerShell) and navigate to the directory where you want to clone the project. Then, run:
    bash
-   git clone https://github.com/adnel133/GaruData.git
+   git clone https://github.com/adnell33/GaruData.git
    cd GaruData
 
 2. **Set Up a Virtual Environment (Optional but Recommended)**
@@ -86,4 +86,4 @@ python convert_json.py
 ### USER INTERFACE
 
 
-![USER INTERFACE](https://github.com/adnell33/Garudata/raw/main/sample.jpg)
+![USER INTERFACE](https://github.com/adnell33/Garudata/sample.jpg)
