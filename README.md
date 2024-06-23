@@ -81,7 +81,7 @@ Open your web browser and navigate to the URL provided by the server (usually ht
 
 
 
-*USER INTERFACE*
+##USER INTERFACE##
 
 
 ![USER INTERFACE](https://github.com/adnell33/GaruData/raw/main/sample.jpg)
