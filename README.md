@@ -86,4 +86,4 @@ python convert_json.py
 ### USER INTERFACE
 
 
-![USER INTERFACE](https://github.com/adnell33/Garudata/sample.jpg)
+![USER INTERFACE](sample.jpg)
