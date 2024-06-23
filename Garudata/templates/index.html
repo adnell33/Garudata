@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Converter</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-center mb-4">JSON Converter</h1>
+            </div>
+            <div class="col-md-4">
+                <h2>Saved JSON</h2>
+                <table class="table table-striped" id="json-data">
+                    <thead>
+                        <tr>
+                            <th scope="col">File Name</th>
+                            <th scope="col">Table Name</th>
+                            <th scope="col">Download JSON</th>
+                            <th scope="col">Preview</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div id="result_preview"></div>
+            </div>
+            <div class="col-md-4">
+                <h2>DB to JSON Converter</h2>
+                <form id="convert_db" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="table_name" class="form-label">Input Table Name:</label>
+                        <input type="text" class="form-control" id="table_name" name="table_name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="db_file" class="form-label">Select DB file:</label>
+                        <input type="file" class="form-control" id="db_file" name="db_file" accept=".db">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Convert</button>
+                </form>
+                <div id="result_db" class="mt-3"></div>
+
+                <h2 class="mt-5">XLSX to JSON Converter</h2>
+                <form id="convert_xlsx" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="xlsx_file" class="form-label">Select XLSX file:</label>
+                        <input type="file" class="form-control" id="xlsx_file" name="xlsx_file" accept=".xlsx">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Convert</button>
+                </form>
+                <div id="result_xlsx" class="mt-3"></div>
+
+                <h2 class="mt-5">CSV to JSON Converter</h2>
+                <form id="convert_csv" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="csv_file" class="form-label">Select CSV file:</label>
+                        <input type="file" class="form-control" id="csv_file" name="csv_file" accept=".csv">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Convert</button>
+                </form>
+                <div id="result_csv" class="mt-3"></div>
+            </div>
+            <div class="col-md-4">
+                <h2>Search Data</h2>
+                <form id="search_data">
+                    <div class="mb-3">
+                        <label for="keyword" class="form-label">Input Keyword:</label>
+                        <input type="text" class="form-control" id="keyword" name="keyword">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+                <div id="search_result" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('#convert_db').on('submit', function(event){
+                event.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: '/convert/db',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        if (response.success) {
+                            $('#result_db').html('<h3>File Uploaded:</h3><p>' + response.json_file_path + '</p>');
+                        } else {
+                            $('#result_db').html('<h3>Error:</h3><p>' + response.error + '</p>');
+                        }
+                    },
+                    error: function(xhr) {
+                        $('#result_db').html('<h3>Error:</h3><p>An error occurred: ' + xhr.responseJSON.error + '</p>');
+                    }
+                });
+            });
+
+            $('#convert_xlsx').on('submit', function(event){
+                event.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: '/convert/xlsx',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        if (response.success) {
+                            $('#result_xlsx').html('<h3>File Uploaded:</h3><p>' + response.json_file_path + '</p>');
+                        } else {
+                            $('#result_xlsx').html('<h3>Error:</h3><p>' + response.error + '</p>');
+                        }
+                    },
+                    error: function(xhr) {
+                        $('#result_xlsx').html('<h3>Error:</h3><p>An error occurred: ' + xhr.responseJSON.error + '</p>');
+                    }
+                });
+            });
+
+            $('#convert_csv').on('submit', function(event){
+                event.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: '/convert/csv',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        if (response.success) {
+                            $('#result_csv').html('<h3>File Uploaded:</h3><p>' + response.json_file_path + '</p>');
+                        } else {
+                            $('#result_csv').html('<h3>Error:</h3><p>' + response.error + '</p>');
+                        }
+                    },
+                    error: function(xhr) {
+                        $('#result_csv').html('<h3>Error:</h3><p>An error occurred: ' + xhr.responseJSON.error + '</p>');
+                    }
+                });
+            });
+
+            $('#search_data').on('submit', function(event){
+                event.preventDefault();
+                var keyword = $('#keyword').val();
+                $.ajax({
+                    url: '/search',
+                    type: 'POST',
+                    data: JSON.stringify({ keywords: keyword }),
+                    contentType: 'application/json',
+                    success: function(response){
+                        if (response) {
+                            $('#search_result').html('<h3>Search Result:</h3><pre><code>' + JSON.stringify(response, null, 4) + '</code></pre>');
+                        } else {
+                            $('#search_result').html('<h3>Error:</h3><p>' + response.error + '</p>');
+                        }
+                    },
+                    error: function(xhr) {
+                        $('#search_result').html('<h3>Error:</h3><p>An error occurred: ' + xhr.responseJSON.error + '</p>');
+                    }
+                });
+            });
+
+            $.ajax({
+                url: '/get/json_data',
+                method: 'GET',
+                success: function(data){
+                    var tableBody = $('#json-data tbody');
+                    tableBody.empty();
+                    data.forEach(function(item){
+                        var row = $('<tr></tr>');
+                        var fileName = item.table_name ? item.table_name + '.json' : item.file_name;
+                        var url = fileName.replace('.xlsx', '.json').replace('.csv', '.json').replace('.db', '.json');
+                        row.append($('<td></td>').text(item.file_name));
+                        row.append($('<td></td>').text(item.table_name));
+                        row.append($('<td class="text-center"></td>').append($('<a></a>').attr('href', 'download/json?file_name=' + url).append('<button class="btn btn-sm btn-success">Download</button>')));
+                        row.append($('<td class="text-center"></td>').append('<button class="btn btn-sm btn-info" onclick="preview(\'' + url + '\')">Preview</button>'));
+                        tableBody.append(row);
+                    });
+                },
+                error: function(xhr){
+                    alert('An error occurred: ' + xhr.responseJSON.error);
+                }
+            });
+        });
+
+        function preview(file_name) {
+            $.ajax({
+                url: '/get/preview?file_name=' + file_name,
+                method: 'GET',
+                success: function(response){
+                    if (response) {
+                        $('#result_preview').html('<h3>Preview:</h3><pre><code>' + JSON.stringify(response, null, 4) + '</code></pre>');
+                    } else {
+                        $('#result_preview').html('<h3>Error:</h3><p>' + response.error + '</p>');
+                    }
+                },
+                error: function(xhr){
+                    alert('An error occurred: ' + xhr.responseJSON.error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
